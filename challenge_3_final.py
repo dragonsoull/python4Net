@@ -30,6 +30,8 @@ def show_version(ip,username, password):
     print(response)
     print("")
     print(response['result']['body']['nxos_ver_str'])
+    print("")
+    print(json.dumps(payload))
 
 
 if __name__ == '__main__':
