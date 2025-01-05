@@ -53,10 +53,35 @@ def write_to_memory(devices):
     for device in devices:
         try:
             connection = ConnectHandler(**device)
-            connection.enable()  # Enter enable mode if required
+            # connection.enable()  # Enter enable mode if required
             connection.send_command("write memory")
             connection.disconnect()
         except Exception as e:
             print(f"An error occurred: {e}")
 
-write_to_memory(define_devices(int(input("type in total number of device you want to write memory"))))
+def disable_secret(devices):
+    for device in devices:
+        try:
+            connection = ConnectHandler(**device)
+            connection.enable()  # Enter enable mode if required
+            config_commands = "no enable secret"
+            output = connection.send_config_set(config_commands)
+            print(output)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+def show_interface(devices):
+    for device in devices:
+        try:
+            connection = ConnectHandler(**device)
+            connection.enable()  # Enter enable mode if required
+            output = connection.send_command("show ip interface brief")
+            print(output)
+            connection.disconnect()
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+# write_to_memory(define_devices(int(input("type in total number of device you want to write memory"))))
+devices = define_devices(3)
+# disable_secret(devices)
+write_to_memory(devices)
